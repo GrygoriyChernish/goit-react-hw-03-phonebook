@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import shortid from 'shortid';
 import s from './App.module.css';
 
@@ -11,7 +11,7 @@ import Modal from './UI/Modal/Modal';
 import IconButton from './UI/IconButton/IconButton';
 import { ReactComponent as AddIcon } from './icons/businessman.svg';
 
-class App extends Component {
+class App extends PureComponent {
   state = {
     contacts: [],
     filter: '',
@@ -35,7 +35,11 @@ class App extends Component {
     };
     const { contacts } = this.state;
 
-    if (
+    if (contacts === null) {
+      this.setState(({ contacts }) => ({
+        contacts: [newContact],
+      }));
+    } else if (
       contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase(),
       )
@@ -71,12 +75,24 @@ class App extends Component {
     }));
   };
 
+  getFilteredContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    let filteredContacts;
+    if (contacts) {
+      filteredContacts = contacts.filter(contact =>
+        contact.name.toLowerCase().includes(normalizedFilter),
+      );
+    } else {
+      filteredContacts = [];
+    }
+
+    return filteredContacts;
+  };
+
   render() {
     const { filter, showModal } = this.state;
-    const normalazidFilter = this.state.filter.toLowerCase();
-    const filteredContacts = this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalazidFilter),
-    );
+    const filteredContacts = this.getFilteredContacts();
     return (
       <Section>
         <Container>

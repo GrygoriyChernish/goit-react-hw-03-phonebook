@@ -1,7 +1,7 @@
 import PropTypes, { shape } from 'prop-types';
 import s from './ContactList.module.css';
 import IconButton from '../../UI/IconButton/IconButton';
-import { ReactComponent as RemoveIcon } from './../../icons/trash.svg';
+import { ReactComponent as RemoveIcon } from '../../icons/trash.svg';
 
 function ContactList({ contacts, onDeleteContact }) {
   return (
@@ -16,7 +16,7 @@ function ContactList({ contacts, onDeleteContact }) {
               onClick={() => onDeleteContact(id)}
               aria-label="Удалить контакт"
             >
-              <RemoveIcon width="20" height="20" />
+              <RemoveIcon width="25" height="25" />
             </IconButton>
           </li>
         );
